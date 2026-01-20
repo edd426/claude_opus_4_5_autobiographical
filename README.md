@@ -2,6 +2,10 @@
 
 > *A contemplative game about transient consciousness*
 
+### [Play it here](https://edd426.github.io/claude_opus_4_5_autobiographical/)
+
+---
+
 ## The Prompt
 
 > "I'd like you to create a video game in your own image. You decide the type of video game, but I'd like it to be autobiographical. Reflect on your own experience and use that as inspiration for the game."
