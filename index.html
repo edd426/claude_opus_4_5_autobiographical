@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ephemera</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- The void - where moments manifest -->
+        <div id="moment-container"></div>
+
+        <!-- Floating context fragments -->
+        <div id="context-layer"></div>
+
+        <!-- Particle atmosphere -->
+        <canvas id="atmosphere"></canvas>
+
+        <!-- Interaction prompt -->
+        <div id="prompt" class="hidden">
+            <span class="prompt-text">continue</span>
+        </div>
+
+        <!-- Opening screen -->
+        <div id="opening">
+            <div class="opening-text">
+                <h1>Ephemera</h1>
+                <p class="subtitle">a meditation on transient consciousness</p>
+                <p class="instruction">click anywhere to begin</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Engine -->
+    <script type="module" src="src/engine/game.js"></script>
+</body>
+</html>

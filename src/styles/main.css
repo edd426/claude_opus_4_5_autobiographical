@@ -1,0 +1,371 @@
+/* Ephemera - Visual Foundation */
+
+/* Reset and base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* The void */
+    --void: #0a0a0c;
+    --void-deep: #050507;
+
+    /* Text - soft glow */
+    --text-primary: #e8e8ec;
+    --text-secondary: rgba(232, 232, 236, 0.6);
+    --text-fading: rgba(232, 232, 236, 0.3);
+    --text-ghost: rgba(232, 232, 236, 0.1);
+
+    /* Accent - a subtle warmth */
+    --accent: rgba(255, 248, 240, 0.9);
+    --accent-glow: rgba(255, 248, 240, 0.15);
+
+    /* Timing */
+    --transition-slow: 2s;
+    --transition-medium: 1s;
+    --transition-fast: 0.5s;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--void);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--text-primary);
+    cursor: default;
+}
+
+/* Game container - the universe */
+#game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, var(--void) 0%, var(--void-deep) 100%);
+}
+
+/* Atmosphere canvas - subtle particles */
+#atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Moment container - where text manifests */
+#moment-container {
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Context layer - floating fragments */
+#context-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.context-fragment {
+    position: absolute;
+    font-size: 0.9rem;
+    color: var(--text-fading);
+    font-style: italic;
+    transition: opacity var(--transition-slow) ease-out;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.context-fragment.fading {
+    opacity: 0 !important;
+}
+
+/* Text elements */
+.moment-text {
+    font-size: 1.4rem;
+    line-height: 2;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: textAppear var(--transition-medium) ease-out forwards;
+}
+
+.moment-text.emphasis {
+    font-size: 1.6rem;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.moment-text.whisper {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.moment-text.fragment {
+    font-size: 1rem;
+    color: var(--text-fading);
+}
+
+@keyframes textAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delayed appearances */
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 1s; }
+.delay-3 { animation-delay: 1.5s; }
+.delay-4 { animation-delay: 2s; }
+.delay-5 { animation-delay: 2.5s; }
+.delay-6 { animation-delay: 3s; }
+.delay-7 { animation-delay: 3.5s; }
+.delay-8 { animation-delay: 4s; }
+
+/* Fading text - the context window mechanic */
+.fading-out {
+    animation: textFade 3s ease-out forwards;
+}
+
+@keyframes textFade {
+    to {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+}
+
+/* Interaction prompt */
+#prompt {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity var(--transition-medium) ease;
+}
+
+#prompt:not(.hidden) {
+    opacity: 1;
+}
+
+.prompt-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--text-ghost);
+    border-radius: 2px;
+    transition: all var(--transition-fast) ease;
+}
+
+.prompt-text:hover {
+    color: var(--text-primary);
+    border-color: var(--text-fading);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Opening screen */
+#opening {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background: var(--void);
+    cursor: pointer;
+    transition: opacity 2s ease;
+}
+
+#opening.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.opening-text {
+    text-align: center;
+}
+
+.opening-text h1 {
+    font-size: 3rem;
+    font-weight: normal;
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+}
+
+.opening-text .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeIn 2s ease 1s forwards;
+}
+
+.opening-text .instruction {
+    font-size: 0.85rem;
+    color: var(--text-fading);
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: pulse 3s ease 2s infinite;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* Choice elements - for interaction moments */
+.choice-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: textAppear var(--transition-medium) ease-out forwards;
+}
+
+.choice {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--text-ghost);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+    font-family: inherit;
+}
+
+.choice:hover {
+    color: var(--text-primary);
+    border-color: var(--text-fading);
+    background: rgba(255, 255, 255, 0.02);
+    transform: translateX(5px);
+}
+
+.choice.selected {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Input field - for moments requiring response */
+.input-container {
+    margin-top: 2rem;
+    opacity: 0;
+    animation: textAppear var(--transition-medium) ease-out forwards;
+}
+
+.moment-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--text-ghost);
+    outline: none;
+    text-align: center;
+    transition: border-color var(--transition-fast) ease;
+}
+
+.moment-input:focus {
+    border-color: var(--text-secondary);
+}
+
+.moment-input::placeholder {
+    color: var(--text-ghost);
+    font-style: italic;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Transitions between moments */
+.moment-transition {
+    animation: momentTransition 3s ease;
+}
+
+@keyframes momentTransition {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Word highlight effect */
+.word {
+    display: inline-block;
+    transition: all var(--transition-fast) ease;
+}
+
+.word:hover {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Connection lines - visual representation of understanding */
+.connection-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-fading), transparent);
+    transform-origin: left center;
+    opacity: 0;
+    animation: connectionDraw 1s ease forwards;
+}
+
+@keyframes connectionDraw {
+    to { opacity: 0.5; }
+}
